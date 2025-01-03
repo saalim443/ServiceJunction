@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ServiceJunction</string>
+    <string name="title_activity_bottom_bar">BottomBar</string>
+    <string name="title_activity_tab_bar">TabBarActivity</string>
+    <string name="countinue">Continue</string>
+    <string name="back">Back</string>
+    <string name="select_your_favourite_language">select your favourite language !!</string>
+    <string name="pick_up_your_language">Pick up your language</string>
+    <string name="didnt_receive_it">Didn\'t receive it?</string>
+</resources>
