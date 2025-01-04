@@ -1,6 +1,5 @@
 package com.service.servicejunction.home.laundry.domain.repository
 
-import com.service.servicejunction.home.laundry.domain.local.LaundryCategory
 import com.service.servicejunction.home.laundry.domain.local.LaundryItem
 import com.service.servicejunction.home.laundry.domain.local.LaundryWithCategory
 

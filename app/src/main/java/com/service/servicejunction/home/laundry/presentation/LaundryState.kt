@@ -1,6 +1,5 @@
 package com.service.servicejunction.home.laundry.presentation
 
-import com.service.servicejunction.home.laundry.data.local.LaundryCategoryEntity
 import com.service.servicejunction.home.laundry.domain.local.LaundryCategory
 import com.service.servicejunction.home.laundry.domain.local.LaundryWithCategory
 
