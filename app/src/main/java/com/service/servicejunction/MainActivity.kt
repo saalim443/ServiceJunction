@@ -33,14 +33,16 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController, startDestination = Routes.IntroScreen.route) {
 
                     composable(Routes.IntroScreen.route) {
-                        IntroScreen(onNavigateToSignin = { navController.navigate(Routes.SignIn.route) })
+                        IntroScreen(onLoginClick = { navController.navigate(Routes.Otp.route) },
+                            onForgotPasswordClick = { navController.navigate(Routes.ForgotPassword.route) }
+                        )
                     }
 
                     composable(Routes.SignIn.route) {
-                        Signin(
-                            onLoginClick = { navController.navigate(Routes.Otp.route) },
-                            onForgotPasswordClick = { navController.navigate(Routes.ForgotPassword.route) }
-                        )
+//                        Signin(
+//                            onLoginClick = { navController.navigate(Routes.Otp.route) },
+//                            onForgotPasswordClick = { navController.navigate(Routes.ForgotPassword.route) }
+//                        )
                     }
 
                     composable(Routes.Otp.route) {

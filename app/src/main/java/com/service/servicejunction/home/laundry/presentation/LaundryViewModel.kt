@@ -29,7 +29,7 @@ class LaundryViewModel @Inject constructor(
                 Pair("Bed-sheet laundry", R.drawable.ic_shirt),
                 Pair("Curtain dry cleaning", R.drawable.ic_shirt),
                 Pair("Kids wear", R.drawable.ic_shirt),
-                Pair("Sofa & cover cleaner", R.drawable.ic_shirt),
+                Pair("Sofa & cover cleaner", R.drawable.sofa),
                 Pair("Shoe laundering", R.drawable.ic_shirt)
             )
         ),
@@ -46,8 +46,10 @@ class LaundryViewModel @Inject constructor(
         LaundryItem(
             Pair("Offices Dry Cleaning", R.drawable.laundry_1),
             listOf(
-                Pair("Curtains", R.drawable.ic_shirt), Pair("Sofa", R.drawable.ic_shirt),
-                Pair("Floor mats", R.drawable.ic_shirt), Pair("Work outfits", R.drawable.ic_shirt)
+                Pair("Curtains", R.drawable.ic_shirt),
+                Pair("Sofa", R.drawable.sofa),
+                Pair("Floor mats", R.drawable.ic_shirt),
+                Pair("Work outfits", R.drawable.ic_shirt)
             )
         ),
         LaundryItem(
@@ -83,18 +85,28 @@ class LaundryViewModel @Inject constructor(
         }
     }
 
+//    fun getLaundryCategory(laundryId: Int) {
+//        val selectedCategory = state.laundryListWithCategory
+//            .map { laundryWithCategory ->
+//                val filteredCategory = laundryWithCategory.category
+//                    .filter { it.laundryId == laundryId }
+//                laundryWithCategory.copy(category = filteredCategory)
+//            }
+//            .filter { it.category.isNotEmpty() }
+//        val category = selectedCategory.flatMap { it.category }.map {
+//            it.toLaundryCategory()
+//        }
+//        state = state.copy(laundryCategory = category)
+//    }
+
     fun getLaundryCategory(laundryId: Int) {
-        val selectedCategory = state.laundryListWithCategory
-            .map { laundryWithCategory ->
-                val filteredCategory = laundryWithCategory.category
-                    .filter { it.laundryId == laundryId }
-                laundryWithCategory.copy(category = filteredCategory)
-            }
-            .filter { it.category.isNotEmpty() }
-        val category = selectedCategory.flatMap { it.category }.map {
-            it.toLaundryCategory()
-        }
-        state = state.copy(laundryCategory = category)
+        val selectedCategories = state.laundryListWithCategory
+            .find { it.laundry.laundryId == laundryId }
+            ?.category
+            ?.map { it.toLaundryCategory() }
+            ?: emptyList()
+
+        state = state.copy(laundryCategory = selectedCategories)
     }
 
     fun updateLaundryCategory(
@@ -132,4 +144,37 @@ class LaundryViewModel @Inject constructor(
             state = state.copy(laundryCategory = category)
         }
     }
+
+//
+
+//    fun updateLaundryCategory(
+//        categoryId: Int,
+//        laundryId: Int,
+//        categoryName: String,
+//        newCount: Int,
+//        iconRes: Int
+//    ) {
+//        // Update the count in the current state
+//        val updatedCategories = state.laundryCategory.map { category ->
+//            if (category.categoryId == categoryId) {
+//                category.copy(count = newCount) // Create a new instance with the updated count
+//            } else {
+//                category
+//            }
+//        }
+//
+//        // Update the state to trigger recomposition
+//        state = state.copy(laundryCategory = updatedCategories)
+//
+//        // Persist the changes in the repository
+//        viewModelScope.launch {
+//            repository.updateLaundryCategory(
+//                categoryId = categoryId,
+//                laundryId = laundryId,
+//                categoryName = categoryName,
+//                newCount = newCount,
+//                iconRes = iconRes
+//            )
+//        }
+//    }
 }

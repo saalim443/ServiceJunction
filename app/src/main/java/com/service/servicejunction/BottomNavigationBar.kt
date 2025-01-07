@@ -57,6 +57,7 @@ import com.service.servicejunction.food.FoodDetailScreen
 import com.service.servicejunction.food.FoodUiScreen
 import com.service.servicejunction.food.OrderSummaryScreen
 import com.service.servicejunction.food.PaymentOptionScreen
+import com.service.servicejunction.history.HistoryScreen
 import com.service.servicejunction.home.HomeScreenContent
 import com.service.servicejunction.profile.ProfileScreen
 import com.service.servicejunction.search.SearchScreen
@@ -128,7 +129,7 @@ fun BottomNavigationBar(navigationController: NavHostController) {
             modifier = Modifier.weight(1f)
         ) {
             BottomBarItem(
-                icon = Screen.Home.icon,
+                icon = if (currentRoute == Screen.Home.route)R.drawable.baseline_home_24 else Screen.Home.icon,
                 "Home",
                 color = if (currentRoute == Screen.Home.route) Color.Black else Color.Gray
             )
@@ -147,7 +148,7 @@ fun BottomNavigationBar(navigationController: NavHostController) {
             modifier = Modifier.weight(1f)
         ) {
             BottomBarItem(
-                icon = Screen.Search.icon,
+                icon = if (currentRoute == Screen.Search.route) R.drawable.baseline_search_24 else Screen.Search.icon,
                 "Search",
                 color = if (currentRoute == Screen.Search.route) Color.Black else Color.Gray
             )
@@ -158,8 +159,8 @@ fun BottomNavigationBar(navigationController: NavHostController) {
         //Offer
         IconButton(
             onClick = {
-                selected.intValue = Screen.Offer.icon
-                navigationController.navigate(Screen.Offer.route) {
+                selected.intValue = Screen.History.icon
+                navigationController.navigate(Screen.History.route) {
                     popUpTo(navigationController.graph.startDestinationId) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
@@ -168,9 +169,9 @@ fun BottomNavigationBar(navigationController: NavHostController) {
             modifier = Modifier.weight(1f)
         ) {
             BottomBarItem(
-                icon = Screen.Offer.icon,
-                "Offer",
-                color = if (currentRoute == Screen.Offer.route) Color.Black else Color.Gray
+                icon = if (currentRoute == Screen.History.route) R.drawable.baseline_event_note_24 else Screen.History.icon,
+                "History",
+                color = if (currentRoute == Screen.History.route) Color.Black else Color.Gray
             )
         }
 
@@ -185,7 +186,7 @@ fun BottomNavigationBar(navigationController: NavHostController) {
             modifier = Modifier.weight(1f)
         ) {
             BottomBarItem(
-                icon = Screen.Profile.icon,
+                icon = if (currentRoute == Screen.Profile.route) R.drawable.baseline_person_24 else Screen.Profile.icon,
                 "Profile",
                 color = if (currentRoute == Screen.Profile.route) Color.Black else Color.Gray
             )
@@ -282,7 +283,7 @@ fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modif
         composable(Screen.Home.route) { HomeScreenContent() }
         composable(Screen.Search.route) { SearchScreen() }
         composable(Screen.Food.route) { FoodUiScreen(navController) }
-        composable(Screen.Offer.route) { }
+        composable(Screen.History.route) { HistoryScreen() }
         composable(Screen.Profile.route) { ProfileScreen() }
 
 
@@ -317,10 +318,10 @@ fun HomeScreen() {
 }
 
 sealed class Screen(val route: String, val title: String, val icon: Int) {
-    data object Home : Screen("home", "Service", R.drawable.baseline_fastfood_24)
-    data object Search : Screen("search", "Search", R.drawable.baseline_fastfood_24)
-    data object Profile : Screen("profile", "Profile", R.drawable.baseline_fastfood_24)
-    data object Offer : Screen("offer", "Offer", R.drawable.baseline_fastfood_24)
+    data object Home : Screen("home", "Service", R.drawable.outline_home_24)
+    data object Search : Screen("search", "Search", R.drawable.baseline_search_24)
+    data object Profile : Screen("profile", "Profile", R.drawable.outline_person_24)
+    data object History : Screen("history", "History", R.drawable.outline_event_note_24)
     data object Food : Screen("food", "Food", R.drawable.ic_foodicon)
 
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.service.servicejunction.R
@@ -44,7 +45,7 @@ fun LaundryGridItem (
             .padding(4.dp)
             .background(
                 if (isSelected)
-                    Color(0xFF215CF3)
+                    Color.Black
                 else
                     Color.Transparent,
                 RoundedCornerShape(4.dp)
@@ -59,25 +60,28 @@ fun LaundryGridItem (
 //                    selectedService = if (isSelected) null else item
                     onSelectService(item)
                 }
+                .size(110.dp)
         ) {
 
-            Box() {
+            Column {
                 Image(
                     painterResource(id = icon),
                     contentDescription = "Image Slider",
-                    contentScale = ContentScale.FillBounds,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(124.dp)
+                        .size(height = 80.dp, width = 110.dp)
 //                        .clip(CircleShape)
                 )
 
                 Text(
                     text = item,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = Color.Black,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                     modifier = Modifier
-                        .align(Alignment.Center)
+                        .align(Alignment.CenterHorizontally)
+                        .padding(4.dp)
                 )
             }
         }

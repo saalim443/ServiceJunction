@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,7 +51,8 @@ fun LaundryScreen(
             }
         }
         if (selectedService != null && selectedLaundryId != null) {
-            CategoryScreen(laundryId = selectedLaundryId!!, viewModel, state.laundryCategory)
+            CategoryScreen(laundryId = selectedLaundryId!!, viewModel)
+            viewModel.getLaundryCategory(selectedLaundryId!!)
         } else {
             Text("Select Category", modifier = Modifier.align(Alignment.CenterHorizontally))
         }
@@ -62,21 +63,54 @@ fun LaundryScreen(
 fun CategoryScreen(
     laundryId: Int,
     viewModel: LaundryViewModel,
-    laundry: List<LaundryCategory>, ) {
+//    laundry: List<LaundryCategory>,
+    //state: LaundryState
+) {
 
 //    val state = viewModel.state
 
-    viewModel.getLaundryCategory(laundryId)
+//    viewModel.getLaundryCategory(laundryId)
+
+    val laundry = viewModel.state.laundryCategory
 
     LazyColumn(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(4.dp)
     ) {
-        items(laundry.size){ index ->
+        items(laundry.size) { index ->
             val category = laundry[index]
-            LaundryDetailItem(categoryId = category.categoryId, laundryId = laundryId,
-                categoryName = category.categoryName, count = category.count, iconRes = category.iconRes,
-                viewModel = viewModel)
+            LaundryDetailItem(
+                categoryName = category.categoryName,
+                count = category.count,
+                iconRes = category.iconRes,
+                onCountChanged = { newCount ->
+                    viewModel.updateLaundryCategory(
+                        categoryId = category.categoryId,
+                        laundryId = laundryId,
+                        categoryName = category.categoryName,
+                        newCount = newCount,
+                        iconRes = category.iconRes,
+                    )
+                })
         }
+
+//        items(
+//            itemContent = state.laundryCategory,
+//            key = { it.categoryId }) { category ->
+//            LaundryDetailItem(
+//                categoryName = category.categoryName,
+//                count = category.count,
+//                iconRes = category.iconRes,
+//                onCountChanged = { newCount ->
+//                    viewModel.updateLaundryCategory(
+//                        categoryId = category.categoryId,
+//                        laundryId = selectedLaundryId!!,
+//                        categoryName = category.categoryName,
+//                        newCount = newCount,
+//                        iconRes = category.iconRes
+//                    )
+//                }
+//            )
+//        }
     }
 }
 

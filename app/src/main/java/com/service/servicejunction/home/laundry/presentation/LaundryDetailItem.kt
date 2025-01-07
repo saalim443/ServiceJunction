@@ -1,7 +1,9 @@
 package com.service.servicejunction.home.laundry.presentation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,20 +31,19 @@ import com.service.servicejunction.profile.ProfileScreen
 
 @Composable
 fun LaundryDetailItem(
-    categoryId: Int,
-    laundryId: Int,
     categoryName: String,
     count: Int,
-    viewModel: LaundryViewModel,
-    iconRes: Int
+    iconRes: Int,
+    onCountChanged: (Int) -> Unit
 ) {
-    var currentCount = count
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 8.dp, horizontal = 2.dp)
             .fillMaxWidth()
+            .background(Color.White, RoundedCornerShape(4.dp))
+            .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
     ) {
         Image(
             painter = painterResource(id = iconRes),
@@ -49,15 +51,17 @@ fun LaundryDetailItem(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(50.dp)
+                .padding(2.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFE0E7FF))
+                .padding(8.dp)
+                .background(Color.White)
         )
 
         Text(
             text = categoryName,
             fontSize = 12.sp,
-            modifier = Modifier.align(Alignment.CenterVertically)
-                .padding(horizontal = 16.dp)
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 8.dp, end = 16.dp)
                 .weight(0.6f)
 
         )
@@ -68,10 +72,7 @@ fun LaundryDetailItem(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterVertically)
                 .clickable {
-                    if (currentCount > 0) {
-                        currentCount--
-                        onCountChanged(categoryId,laundryId, categoryName, currentCount, iconRes, viewModel)
-                    }
+                    if (count > 0) onCountChanged(count - 1)
                 }
                 .weight(0.1f)
         )
@@ -90,15 +91,9 @@ fun LaundryDetailItem(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterVertically)
                 .clickable {
-                    currentCount++
-                    onCountChanged(categoryId, laundryId, categoryName, currentCount, iconRes, viewModel)
+                    onCountChanged(count + 1)
                 }
                 .weight(0.1f)
         )
     }
-}
-
-fun onCountChanged(categoryId: Int, laundryId: Int, categoryName: String, currentCount: Int, iconRes: Int ,viewModel: LaundryViewModel) {
-    viewModel.updateLaundryCategory(categoryId = categoryId, laundryId = laundryId, categoryName =  categoryName
-        , newCount = currentCount, iconRes = iconRes)
 }
